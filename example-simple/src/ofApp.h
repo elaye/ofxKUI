@@ -13,6 +13,8 @@ class ofApp : public ofBaseApp{
 	ofMaterial material;
 	ofLight light;
 
+	ofxKUI kui;
+
 	public:
 		void setup();
 		void update();
