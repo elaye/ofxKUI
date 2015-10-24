@@ -8,6 +8,8 @@ void ofApp::setup(){
   material.setAmbientColor(ofColor(201, 167, 139));
   material.setDiffuseColor(ofColor(201, 198, 139));
 
+  kui.setLeader(',');
+
 }
 
 void ofApp::update(){
@@ -19,10 +21,13 @@ void ofApp::draw(){
   ofEnableDepthTest();
 
   cam.begin();
-    light.enable();
     material.begin();
-      // box.draw();
-      sphere.draw();
+      light.enable();
+        // box.draw();
+        sphere.draw();
+      light.disable();
     material.end();
   cam.end();
+
+  kui.draw();
 }

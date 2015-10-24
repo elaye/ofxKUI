@@ -1,3 +1,9 @@
+Troubleshooting
+===============
+
+The command bar should normally be at the bottom of your window. If it's not, check that your window height is inferior to your screen height because sometimes the bottom of your window can be hidden by your taskbar.
+
+
 ofxAddonTemplate
 ================
 
