@@ -16,7 +16,7 @@ Special keys are represented between diples like this: `<Esc>` represents the `E
 
 **normal mode [`<Esc>`]**
 
-In this mode you can access all the other modes. It is kind of a `base mode`.
+In this mode you can access all the other modes. It is kind of a 'base mode'.
 
 **camera mode [`c`]**
 
@@ -51,17 +51,17 @@ Troubleshooting
 
 The command bar should normally be at the bottom of your window. If it's not, check that your window height is inferior to your screen height because sometimes the bottom of your window can be hidden by your taskbar.
 
-<Esc> for quiting the app is disabled since it is used to escape command mode.
+`<Esc>` for quiting the app is disabled since it is used to escape command mode.
 
 
 Compatibility
 ------------
-oF 0.9.0
-Tested with Linux.
+Works with oF 0.9.0. Tested with Linux.
 
 Known issues
 ------------
 Rotating the camera resets the camera lookAt point to (0, 0, 0).
+
 The `Hack` font needs to be included in the app `bin/data` directory.
 See the examples.
 
