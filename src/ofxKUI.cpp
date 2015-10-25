@@ -11,7 +11,6 @@ ofxKUI::ofxKUI(){
   cameraPositionStep = 20;
   cameraAngleStep = 5;
   mode = KUIMode::NORMAL;
-  leader = ':';
 }
 
 void ofxKUI::loadFont(){
@@ -32,10 +31,6 @@ void ofxKUI::initUI(){
 
   comStrPos.x = x + 5;
   comStrPos.y = y + 0.9 * fontHeight;
-}
-
-void ofxKUI::setLeader(char c){
-  leader = c;
 }
 
 void ofxKUI::setCamera(ofCamera& cam){
@@ -62,7 +57,7 @@ void ofxKUI::draw(){
 void ofxKUI::drawPrompt(){
   rect.draw(); 
   // Print prompt
-  ofSetColor(ofColor::red);
+  ofSetColor(ofColor::white);
   float x = comStrPos.x;
   font.drawString(prompt, x, comStrPos.y);
   // Print commands
@@ -115,7 +110,7 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
       ofNotifyEvent(maps[key.key].event);
       return;
     }
-    if(key.key == leader){
+    if(key.key == 'd'){
       mode = KUIMode::COMMAND;
       return;
     }

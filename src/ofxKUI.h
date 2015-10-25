@@ -25,7 +25,6 @@ class ofxKUI {
   string prompt;
   string command;
   ofPoint comStrPos;
-  char leader;
 
   map<char, Command> maps;
 
@@ -35,7 +34,6 @@ class ofxKUI {
 
   public:
     ofxKUI();
-    void setLeader(char c);
     void setCamera(ofCamera& camera);
 
     void draw();
