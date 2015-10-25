@@ -4,7 +4,8 @@
 
 enum class KUIMode {
   NORMAL,
-  COMMAND
+  COMMAND,
+  CAMERA
 };
 
 struct Command {
@@ -15,8 +16,11 @@ struct Command {
 class ofxKUI {
 
   ofPath rect;
-  ofPath descRect;
   ofTrueTypeFont font;
+
+  ofCamera* camera;
+  float cameraPositionStep;
+  float cameraAngleStep;
 
   string prompt;
   string command;
@@ -32,6 +36,7 @@ class ofxKUI {
   public:
     ofxKUI();
     void setLeader(char c);
+    void setCamera(ofCamera& camera);
 
     void draw();
     void drawPrompt();

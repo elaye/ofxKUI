@@ -8,6 +8,8 @@ ofxKUI::ofxKUI(){
   prompt.append("> ");
   bShowDescription = true;
   bShowMode = true;
+  cameraPositionStep = 20;
+  cameraAngleStep = 5;
   mode = KUIMode::NORMAL;
   leader = ':';
 }
@@ -34,6 +36,10 @@ void ofxKUI::initUI(){
 
 void ofxKUI::setLeader(char c){
   leader = c;
+}
+
+void ofxKUI::setCamera(ofCamera& cam){
+  camera = &cam;
 }
 
 void ofxKUI::draw(){
@@ -75,6 +81,9 @@ void ofxKUI::drawMode(){
     case KUIMode::COMMAND:
       m = "command";
       break;
+    case KUIMode::CAMERA:
+      m = "camera";
+      break;
   }
   float x = ofGetWidth() - font.stringWidth(m) - 5;
   font.drawString(m, x, comStrPos.y);
@@ -100,8 +109,7 @@ void ofxKUI::drawDescription(){
 }
 
 void ofxKUI::keyPressed(ofKeyEventArgs& key){
-  ofLog() << key.key;
-
+  // ofLog() << key.key;
   if(mode == KUIMode::NORMAL){
     if(maps.find(key.key) != maps.end()){
       ofNotifyEvent(maps[key.key].event);
@@ -109,6 +117,10 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
     }
     if(key.key == leader){
       mode = KUIMode::COMMAND;
+      return;
+    }
+    if(key.key == 'c'){
+      mode = KUIMode::CAMERA;
       return;
     }
   }
@@ -132,6 +144,41 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
       if(command.length() < 32){
         command.push_back(key.key);
       }
+    }
+  }
+  else if(mode == KUIMode::CAMERA){
+    switch(key.key){
+      // <Esc>
+      case 27:
+        mode = KUIMode::NORMAL;
+        break;
+      // Positions
+      case 'd': camera->boom(cameraPositionStep); break;
+      case 's': camera->boom(-cameraPositionStep); break;
+
+      case 'z': camera->dolly(-cameraPositionStep); break;
+      case 'x': camera->dolly(cameraPositionStep); break;
+
+      case 'f': camera->truck(cameraPositionStep); break;
+      case 'q': camera->truck(-cameraPositionStep); break;
+
+      // Rotations
+      case 'l': 
+        camera->rotateAround(-cameraAngleStep, camera->getXAxis(), ofVec3f(0, 0, 0)); 
+        camera->lookAt(ofVec3f(0, 0, 0));
+        break;
+      case 'k': 
+        camera->rotateAround(cameraAngleStep, camera->getXAxis(), ofVec3f(0, 0, 0)); 
+        camera->lookAt(ofVec3f(0, 0, 0));
+        break;
+      case 'j': 
+        camera->rotateAround(-cameraAngleStep, ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
+        camera->lookAt(ofVec3f(0, 0, 0));
+        break;
+      case 'm': 
+        camera->rotateAround(cameraAngleStep, ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
+        camera->lookAt(ofVec3f(0, 0, 0));
+        break;
     }
   }
 }
