@@ -2,10 +2,12 @@
 
 ofxKUI::ofxKUI(){
   ofRegisterKeyEvents(this); 
+  ofSetEscapeQuitsApp(false);
   loadFont();
   initUI();
   prompt.append("> ");
   bShowDescription = true;
+  bShowMode = true;
   mode = KUIMode::NORMAL;
   leader = ':';
 }
@@ -35,29 +37,47 @@ void ofxKUI::setLeader(char c){
 }
 
 void ofxKUI::draw(){
-  if(bShowDescription){
-    drawDescription();
-  }
-  if(mode == KUIMode::COMMAND){
-    drawPrompt();
-  }
+  ofPushStyle();
+    ofDisableDepthTest();
+    ofDisableLighting();
+    if(bShowDescription){
+      drawDescription();
+    }
+    if(mode == KUIMode::COMMAND){
+      drawPrompt();
+    }
+    if(bShowMode){
+      drawMode();
+    }
+    ofEnableLighting();
+  ofPopStyle();
 }
 
 void ofxKUI::drawPrompt(){
-  ofPushStyle();
-      ofDisableDepthTest();
-      ofDisableLighting();
-      rect.draw(); 
-      // Print prompt
-      ofSetColor(ofColor::red);
-      float x = comStrPos.x;
-      font.drawString(prompt, x, comStrPos.y);
-      // Print commands
-      ofSetColor(ofColor::white);
-      x += font.stringWidth(prompt) + 5;
-      font.drawString(command, x, comStrPos.y);
-      ofEnableLighting();
-  ofPopStyle();
+  rect.draw(); 
+  // Print prompt
+  ofSetColor(ofColor::red);
+  float x = comStrPos.x;
+  font.drawString(prompt, x, comStrPos.y);
+  // Print commands
+  ofSetColor(ofColor::white);
+  x += font.stringWidth(prompt) + 5;
+  font.drawString(command, x, comStrPos.y);
+  ofEnableLighting();
+}
+
+void ofxKUI::drawMode(){
+  string m;
+  switch(mode){
+    case KUIMode::NORMAL:
+      m = "normal";
+      break;
+    case KUIMode::COMMAND:
+      m = "command";
+      break;
+  }
+  float x = ofGetWidth() - font.stringWidth(m) - 5;
+  font.drawString(m, x, comStrPos.y);
 }
 
 void ofxKUI::drawDescription(){
@@ -67,20 +87,15 @@ void ofxKUI::drawDescription(){
     if(w > descWidth) descWidth = w;
   }
 
-  ofPushStyle();
-      ofDisableDepthTest();
-      ofDisableLighting();
-      float y = 15;
-      for(auto& m : maps){
-        string desc = m.second.desc;
-        float x = ofGetWidth() - descWidth - 10;
-        // ofSetColor(ofColor::green);
-        ofSetColor(ofColor::white);
-        font.drawString(desc, x, y); 
-        y += font.getLineHeight();
-      }
-      ofEnableLighting();
-  ofPopStyle();
+  float y = 15;
+  for(auto& m : maps){
+    string desc = m.second.desc;
+    float x = ofGetWidth() - descWidth - 10;
+    // ofSetColor(ofColor::green);
+    ofSetColor(ofColor::white);
+    font.drawString(desc, x, y); 
+    y += font.getLineHeight();
+  }
 }
 
 void ofxKUI::keyPressed(ofKeyEventArgs& key){
@@ -103,10 +118,14 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
         command.pop_back();
       }
     }
+    else if(key.key == 13){
+      parseExecCommand(command);
+      mode = KUIMode::NORMAL;
+      command = "";
+    }
     else if(key.key == 27){
       mode = KUIMode::NORMAL;
       command = "";
-      ofSetEscapeQuitsApp(true);
     }
     else {
       if(command.length() < 32){
@@ -114,6 +133,18 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
       }
     }
   }
+}
+
+void ofxKUI::showDescription(bool b){
+  bShowDescription = b;
+}
+
+void ofxKUI::showMode(bool b){
+  bShowMode = b;
+}
+
+void ofxKUI::parseExecCommand(string cmd){
+  ofLog() << cmd;
 }
 
 void ofxKUI::keyReleased(ofKeyEventArgs& key){

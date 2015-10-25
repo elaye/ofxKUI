@@ -26,6 +26,7 @@ class ofxKUI {
   map<char, Command> maps;
 
   bool bShowDescription;
+  bool bShowMode;
   KUIMode mode;
 
   public:
@@ -34,9 +35,13 @@ class ofxKUI {
 
     void draw();
     void drawPrompt();
+    void drawMode();
     void drawDescription();
 
     void showDescription(bool b);
+    void showMode(bool b);
+
+    void parseExecCommand(string cmd);
 
     void keyPressed(ofKeyEventArgs& key);
     void keyReleased(ofKeyEventArgs& key);
