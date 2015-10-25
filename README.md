@@ -23,7 +23,12 @@ When in camera mode, you can use keys to move or rotate the camera.
 See the `example-camera` example for a demonstration and more information.
 
 **command mode [`d`]**
+-- TODO --
 This mode lets you enter commands. It is essentially used to set parameter values.
+
+**interactive mode [`i`]**
+-- TODO --
+This mode lets you change parameters interactively.
 
 License
 -------

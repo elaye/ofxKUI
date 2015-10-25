@@ -5,7 +5,7 @@ ofxKUI::ofxKUI(){
   ofSetEscapeQuitsApp(false);
   loadFont();
   initUI();
-  prompt.append("> ");
+  prompt = "> ";
   bShowDescription = true;
   bShowMode = true;
   cameraPositionStep = 20;
