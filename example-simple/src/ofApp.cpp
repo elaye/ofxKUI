@@ -45,14 +45,12 @@ void ofApp::draw(){
 
   cam.begin();
     material.begin();
-      // light.enable();
         if(geometry == Geometry::BOX){
           box.draw();
         }
         else{
           sphere.draw();
         }
-      // light.disable();
     material.end();
   cam.end();
 

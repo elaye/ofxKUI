@@ -51,9 +51,14 @@ class ofxKUI {
       ofEvent<void> e;
       Command com;
       com.event = e;
-      stringstream cs;
-      cs << c;
-      com.desc = "[" + cs.str() + "] " + desc;
+      if(desc == ""){
+        com.desc = "";
+      }
+      else{
+        stringstream cs;
+        cs << c;
+        com.desc = "[" + cs.str() + "] " + desc;
+      }
       maps[c] = com;
       ofAddListener(maps[c].event, listener, listenerMethod);
     }

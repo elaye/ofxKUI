@@ -90,6 +90,7 @@ void ofxKUI::drawDescription(){
   float y = 15;
   for(auto& m : maps){
     string desc = m.second.desc;
+    if(desc == "") continue;
     float x = ofGetWidth() - descWidth - 10;
     // ofSetColor(ofColor::green);
     ofSetColor(ofColor::white);
