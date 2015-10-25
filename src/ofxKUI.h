@@ -2,6 +2,11 @@
 
 #include "ofMain.h"
 
+enum class KUIMode {
+  NORMAL,
+  COMMAND
+};
+
 struct Command {
   ofEvent<void> event;
   string desc;
@@ -20,12 +25,18 @@ class ofxKUI {
 
   map<char, Command> maps;
 
+  bool bShowDescription;
+  KUIMode mode;
+
   public:
     ofxKUI();
     void setLeader(char c);
 
     void draw();
-    void drawCommands();
+    void drawPrompt();
+    void drawDescription();
+
+    void showDescription(bool b);
 
     void keyPressed(ofKeyEventArgs& key);
     void keyReleased(ofKeyEventArgs& key);

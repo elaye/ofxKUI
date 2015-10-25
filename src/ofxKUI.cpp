@@ -5,6 +5,9 @@ ofxKUI::ofxKUI(){
   loadFont();
   initUI();
   prompt.append("> ");
+  bShowDescription = true;
+  mode = KUIMode::NORMAL;
+  leader = ':';
 }
 
 void ofxKUI::loadFont(){
@@ -32,6 +35,15 @@ void ofxKUI::setLeader(char c){
 }
 
 void ofxKUI::draw(){
+  if(bShowDescription){
+    drawDescription();
+  }
+  if(mode == KUIMode::COMMAND){
+    drawPrompt();
+  }
+}
+
+void ofxKUI::drawPrompt(){
   ofPushStyle();
       ofDisableDepthTest();
       ofDisableLighting();
@@ -48,7 +60,7 @@ void ofxKUI::draw(){
   ofPopStyle();
 }
 
-void ofxKUI::drawCommands(){
+void ofxKUI::drawDescription(){
   float descWidth = 0;
   for(auto& m : maps){
     float w = font.stringWidth(m.second.desc);
@@ -74,25 +86,34 @@ void ofxKUI::drawCommands(){
 void ofxKUI::keyPressed(ofKeyEventArgs& key){
   ofLog() << key.key;
 
-  if(maps.find(key.key) != maps.end()){
-    ofNotifyEvent(maps[key.key].event);
-    return;
-  }
-
-  if(key.key == leader){
-    ofLog() << "leader";
-  }
-  else if (key.key == 8) {
-    if(command.length() > 0){
-      command.pop_back();
+  if(mode == KUIMode::NORMAL){
+    if(maps.find(key.key) != maps.end()){
+      ofNotifyEvent(maps[key.key].event);
+      return;
+    }
+    if(key.key == leader){
+      mode = KUIMode::COMMAND;
+      return;
     }
   }
-  else {
-    if(command.length() < 32){
-      command.push_back(key.key);
+  else if(mode == KUIMode::COMMAND){
+    ofSetEscapeQuitsApp(false);
+    if (key.key == 8) {
+      if(command.length() > 0){
+        command.pop_back();
+      }
+    }
+    else if(key.key == 27){
+      mode = KUIMode::NORMAL;
+      command = "";
+      ofSetEscapeQuitsApp(true);
+    }
+    else {
+      if(command.length() < 32){
+        command.push_back(key.key);
+      }
     }
   }
-
 }
 
 void ofxKUI::keyReleased(ofKeyEventArgs& key){

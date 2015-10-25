@@ -57,5 +57,4 @@ void ofApp::draw(){
   cam.end();
 
   kui.draw();
-  kui.drawCommands();
 }
