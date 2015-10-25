@@ -2,17 +2,19 @@
 
 ofxKUI::ofxKUI(){
   ofRegisterKeyEvents(this); 
-  initUI();
   loadFont();
+  initUI();
+  prompt.append("> ");
 }
 
 void ofxKUI::loadFont(){
-  font.load("Hack-v2_015-ttf/Hack-Regular.ttf", 32);
+  font.load("Hack-v2_015-ttf/Hack-Regular.ttf", 10);
 }
 
 void ofxKUI::initUI(){
   float w = ofGetWidth();
-  float h = 20;
+  float fontHeight = font.getLineHeight();
+  float h = 1.2 * fontHeight;
   float x = 0; 
   float y = ofGetHeight() - h; 
   rect.rectangle(x, y, w, h);
@@ -21,8 +23,8 @@ void ofxKUI::initUI(){
   rect.setFillColor(color);
   rect.setFilled(true);
 
-  comStrPos.x = x + 10;
-  comStrPos.y = y;
+  comStrPos.x = x + 5;
+  comStrPos.y = y + 0.9 * fontHeight;
 }
 
 void ofxKUI::setLeader(char c){
@@ -31,20 +33,68 @@ void ofxKUI::setLeader(char c){
 
 void ofxKUI::draw(){
   ofPushStyle();
-      ofEnableAlphaBlending();
+      ofDisableDepthTest();
+      ofDisableLighting();
       rect.draw(); 
-      font.drawString(command.str(), comStrPos.x, comStrPos.y);
+      // Print prompt
+      ofSetColor(ofColor::red);
+      float x = comStrPos.x;
+      font.drawString(prompt, x, comStrPos.y);
+      // Print commands
+      ofSetColor(ofColor::white);
+      x += font.stringWidth(prompt) + 5;
+      font.drawString(command, x, comStrPos.y);
+      ofEnableLighting();
+  ofPopStyle();
+}
+
+void ofxKUI::drawCommands(){
+  float descWidth = 0;
+  for(auto& m : maps){
+    float w = font.stringWidth(m.second.desc);
+    if(w > descWidth) descWidth = w;
+  }
+
+  ofPushStyle();
+      ofDisableDepthTest();
+      ofDisableLighting();
+      float y = 15;
+      for(auto& m : maps){
+        string desc = m.second.desc;
+        float x = ofGetWidth() - descWidth - 10;
+        // ofSetColor(ofColor::green);
+        ofSetColor(ofColor::white);
+        font.drawString(desc, x, y); 
+        y += font.getLineHeight();
+      }
+      ofEnableLighting();
   ofPopStyle();
 }
 
 void ofxKUI::keyPressed(ofKeyEventArgs& key){
+  ofLog() << key.key;
+
+  if(maps.find(key.key) != maps.end()){
+    ofNotifyEvent(maps[key.key].event);
+    return;
+  }
+
   if(key.key == leader){
     ofLog() << "leader";
   }
-  command.put(key.key);
-  ofLog() << command.str();
+  else if (key.key == 8) {
+    if(command.length() > 0){
+      command.pop_back();
+    }
+  }
+  else {
+    if(command.length() < 32){
+      command.push_back(key.key);
+    }
+  }
+
 }
 
 void ofxKUI::keyReleased(ofKeyEventArgs& key){
-  // ofLog() << key.key;
+
 }

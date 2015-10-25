@@ -3,21 +3,29 @@
 #include "ofMain.h"
 #include "ofxKUI.h"
 
+enum class Geometry {
+  BOX, SPHERE
+};
+
 class ofApp : public ofBaseApp{
 
-	ofEasyCam cam;
+  ofEasyCam cam;
 
-	ofBoxPrimitive box;
-	ofSpherePrimitive sphere;
+  Geometry geometry;
+  ofBoxPrimitive box;
+  ofSpherePrimitive sphere;
 
-	ofMaterial material;
-	ofLight light;
+  ofMaterial material;
+  ofLight light;
 
-	ofxKUI kui;
+  ofxKUI kui;
 
-	public:
-		void setup();
-		void update();
-		void draw();
+  public:
+    void setup();
+    void update();
+    void draw();
+
+    void toggleLight();
+    void switchGeometry();
 
 };
