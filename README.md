@@ -22,6 +22,7 @@ In this mode you can access all the other modes. It is kind of a 'base mode'.
 
 This mode lets you control a camera with your keyboard, provided that you set a camera using the `setCamera` method. 
 When in camera mode, you can use keys to move or rotate the camera.
+The idea is that you can control the camera without moving your fingers from the home row (except for moving forward and backward).
 See the `example-camera` example for a demonstration and more information.
 
 **command mode [`d`]**
