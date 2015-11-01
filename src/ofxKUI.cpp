@@ -8,9 +8,11 @@ ofxKUI::ofxKUI(){
   prompt = "> ";
   bShowDescription = true;
   bShowMode = true;
+  bShowParameters = true;
   cameraPositionStep = 20;
   cameraAngleStep = 5;
   mode = KUIMode::NORMAL;
+  camera = nullptr;
 }
 
 void ofxKUI::loadFont(){
@@ -50,6 +52,9 @@ void ofxKUI::draw(){
     if(bShowMode){
       drawMode();
     }
+    if(bShowParameters){
+      imode.drawParameters();
+    }
     ofEnableLighting();
   ofPopStyle();
 }
@@ -79,6 +84,9 @@ void ofxKUI::drawMode(){
     case KUIMode::CAMERA:
       m = "camera";
       break;
+    case KUIMode::INTERACTIVE:
+      m = "interactive";
+      break;
   }
   float x = ofGetWidth() - font.stringWidth(m) - 5;
   font.drawString(m, x, comStrPos.y);
@@ -104,7 +112,7 @@ void ofxKUI::drawDescription(){
 }
 
 void ofxKUI::keyPressed(ofKeyEventArgs& key){
-  // ofLog() << key.key;
+  ofLog() << key.key;
   if(mode == KUIMode::NORMAL){
     if(maps.find(key.key) != maps.end()){
       ofNotifyEvent(maps[key.key].event);
@@ -115,8 +123,20 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
       return;
     }
     if(key.key == 'c'){
+      if(camera == nullptr) {
+        ofLogError() << "You need to set a camera to use the camera mode";
+        return;
+      }
       mode = KUIMode::CAMERA;
       return;
+    }
+    if(key.key == 'i'){
+      // TODO? Add warning when no parameters were set
+      mode = KUIMode::INTERACTIVE;
+      return;
+    }
+    if(key.key == 'f'){
+      UI::toggleAdjustment();
     }
   }
   else if(mode == KUIMode::COMMAND){
@@ -174,7 +194,20 @@ void ofxKUI::keyPressed(ofKeyEventArgs& key){
         camera->rotateAround(cameraAngleStep, ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
         camera->lookAt(ofVec3f(0, 0, 0));
         break;
+      case 32:
+        UI::toggleAdjustment();
+        break;
     }
+  }
+  else if(mode == KUIMode::INTERACTIVE){
+    if(key.key == 27){
+      mode = KUIMode::NORMAL;
+      return;
+    }
+    if(key.key == 32){
+      UI::toggleAdjustment();
+    }
+    imode.action(key.key);
   }
 }
 
@@ -188,6 +221,10 @@ void ofxKUI::showMode(bool b){
 
 void ofxKUI::parseExecCommand(string cmd){
   ofLog() << cmd;
+}
+
+void ofxKUI::addParameters(ofParameterGroup& param){
+  imode.addParameters(param);
 }
 
 void ofxKUI::keyReleased(ofKeyEventArgs& key){

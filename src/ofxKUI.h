@@ -2,18 +2,12 @@
 
 #include "ofMain.h"
 
-enum class KUIMode {
-  NORMAL,
-  COMMAND,
-  CAMERA
-};
-
-struct Command {
-  ofEvent<void> event;
-  string desc;
-};
+#include "UI.h"
+#include "InteractiveMode.h"
 
 class ofxKUI {
+
+  UI ui;
 
   ofPath rect;
   ofTrueTypeFont font;
@@ -28,11 +22,15 @@ class ofxKUI {
 
   map<char, Command> maps;
 
+  InteractiveMode imode;
+
   bool bShowDescription;
+  bool bShowParameters;
   bool bShowMode;
   KUIMode mode;
 
   public:
+
     ofxKUI();
     void setCamera(ofCamera& camera);
 
@@ -46,11 +44,18 @@ class ofxKUI {
 
     void parseExecCommand(string cmd);
 
+    void addParameters(ofParameterGroup& parameters);
+
     void keyPressed(ofKeyEventArgs& key);
     void keyReleased(ofKeyEventArgs& key);
 
+    static KUIAdjust getAdjustment();
+
     template <class ListenerClass>
     void mapCommand(char c, ListenerClass* listener, void (ListenerClass::*listenerMethod)(void), string desc = ""){
+      if(c == 'i' || c == 'c' || c == 'd' || c == 32){
+        ofLogWarning() << "Mapping a command using a character already used for mode switching";
+      }
       ofEvent<void> e;
       Command com;
       com.event = e;
