@@ -28,7 +28,7 @@ void CameraMode::action(char key){
     case 'd': camera->boom(getPositionStep()); break;
     case 's': camera->boom(-getPositionStep()); break;
 
-    case 'z': camera->dolly(-getPositionStep()); break;
+    case 'w': camera->dolly(-getPositionStep()); break;
     case 'x': camera->dolly(getPositionStep()); break;
 
     case 'f': camera->truck(getPositionStep()); break;
