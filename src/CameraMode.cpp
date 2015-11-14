@@ -3,8 +3,10 @@
 CameraMode::CameraMode(UI& _ui) :
   ui(_ui) 
 {
-  cameraPositionStep = 20;
-  cameraAngleStep = 5;
+  coarsePositionStep = 20;
+  finePositionStep = 4;
+  coarseAngleStep = 5;
+  fineAngleStep = 1;
   camera = nullptr;
   ofLog() << "camera init";
 }
@@ -23,34 +25,52 @@ void CameraMode::action(char key){
       ui.setMode(KUIMode::NORMAL);
       break;
     // Positions
-    case 'd': camera->boom(cameraPositionStep); break;
-    case 's': camera->boom(-cameraPositionStep); break;
+    case 'd': camera->boom(getPositionStep()); break;
+    case 's': camera->boom(-getPositionStep()); break;
 
-    case 'z': camera->dolly(-cameraPositionStep); break;
-    case 'x': camera->dolly(cameraPositionStep); break;
+    case 'z': camera->dolly(-getPositionStep()); break;
+    case 'x': camera->dolly(getPositionStep()); break;
 
-    case 'f': camera->truck(cameraPositionStep); break;
-    case 'q': camera->truck(-cameraPositionStep); break;
+    case 'f': camera->truck(getPositionStep()); break;
+    case 'a': camera->truck(-getPositionStep()); break;
 
     // Rotations
     case 'l': 
-      camera->rotateAround(-cameraAngleStep, camera->getXAxis(), ofVec3f(0, 0, 0)); 
+      camera->rotateAround(-getAngleStep(), camera->getXAxis(), ofVec3f(0, 0, 0)); 
       camera->lookAt(ofVec3f(0, 0, 0));
       break;
     case 'k': 
-      camera->rotateAround(cameraAngleStep, camera->getXAxis(), ofVec3f(0, 0, 0)); 
+      camera->rotateAround(getAngleStep(), camera->getXAxis(), ofVec3f(0, 0, 0)); 
       camera->lookAt(ofVec3f(0, 0, 0));
       break;
     case 'j': 
-      camera->rotateAround(-cameraAngleStep, ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
+      camera->rotateAround(-getAngleStep(), ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
       camera->lookAt(ofVec3f(0, 0, 0));
       break;
-    case 'm': 
-      camera->rotateAround(cameraAngleStep, ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
+    case ';': 
+      camera->rotateAround(getAngleStep(), ofVec3f(0, 1, 0), ofVec3f(0, 0, 0)); 
       camera->lookAt(ofVec3f(0, 0, 0));
       break;
-    case 32:
+    case KUIKey::Space:
       ui.toggleAdjustment();
       break;
   } 
+}
+
+float CameraMode::getPositionStep(){
+  if(ui.getAdjustment() == KUIAdjust::COARSE){
+    return coarsePositionStep;
+  }
+  else{
+    return finePositionStep;
+  }
+}
+
+float CameraMode::getAngleStep(){
+  if(ui.getAdjustment() == KUIAdjust::COARSE){
+    return coarseAngleStep;
+  }
+  else{
+    return fineAngleStep;
+  }
 }

@@ -9,8 +9,12 @@ class CameraMode {
   UI& ui;
 
   ofCamera* camera;
-  float cameraPositionStep;
-  float cameraAngleStep;
+
+  float coarsePositionStep;
+  float finePositionStep;
+
+  float coarseAngleStep;
+  float fineAngleStep;
 
   public:
     CameraMode(UI& ui);
@@ -19,4 +23,8 @@ class CameraMode {
 
     void setCamera(ofCamera& camera);
     ofCamera* getCamera();
+
+  private:
+  	float getPositionStep();
+  	float getAngleStep();
 };
