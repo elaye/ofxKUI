@@ -1,6 +1,8 @@
 #include "InteractiveMode.h"
 
-InteractiveMode::InteractiveMode(){
+InteractiveMode::InteractiveMode(UI& _ui) :
+  ui(_ui)
+{
   sliderWidth = 100;
   sliderHeight = 2;
   hmargin = 20;
@@ -15,9 +17,16 @@ void InteractiveMode::addParameters(ofParameterGroup& params){
 }
 
 void InteractiveMode::action(char key){
+  if(key == KUIKey::Esc){
+    ui.setMode(KUIMode::NORMAL);
+    return;
+  }
+  if(key == KUIKey::Space){
+    ui.toggleAdjustment();
+  }
   ofParameter<float> scale = parameters->getFloat("Scale");
   float v;
-  if(UI::getAdjustment() == KUIAdjust::COARSE){
+  if(ui.getAdjustment() == KUIAdjust::COARSE){
     v = 10;
   }
   else{

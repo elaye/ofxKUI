@@ -6,7 +6,7 @@
 
 class InteractiveMode {
 
-  UI ui;
+  UI& ui;
 
   ofParameterGroup* parameters;
 
@@ -15,7 +15,7 @@ class InteractiveMode {
   float sliderStopHeight, sliderStopWidth;
 
   public:
-    InteractiveMode();
+    InteractiveMode(UI& ui);
 
     void action(char key);
 

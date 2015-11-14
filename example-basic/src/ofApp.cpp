@@ -2,7 +2,7 @@
 
 void ofApp::setup(){
   newColor();
-  kui.mapCommand('r', this, &ofApp::newColor, "New random color");
+  kui.mapKey('r', this, &ofApp::newColor, "New random color");
 }
 
 void ofApp::newColor(){

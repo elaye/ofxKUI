@@ -14,22 +14,33 @@ enum class KUIAdjust {
   FINE
 };
 
-// enum class KUIKey {
-// space = 32
-// };
-
-struct Command {
-  ofEvent<void> event;
-  string desc;
+namespace KUIKey {
+  const int Space = 32;
+  const int Esc = 27;
+  const int Return = 13;
+  const int Backspace = 8;
 };
 
 class UI {
 
-  static KUIAdjust adjust;
+  KUIMode mode;
+  KUIAdjust adjust;
+
+  ofTrueTypeFont font;
 
   public:
-    static KUIAdjust getAdjustment();
-    static void setAdjustment(KUIAdjust adj);
-    static void toggleAdjustment();
+    UI();
+    ofTrueTypeFont& getFont();
+    KUIMode getMode();
+    void setMode(KUIMode mode);
+
+    KUIAdjust getAdjustment();
+    void setAdjustment(KUIAdjust adj);
+    void toggleAdjustment();
+
+    void drawMode();
+
+  private: 
+    void loadFont();
 
 };

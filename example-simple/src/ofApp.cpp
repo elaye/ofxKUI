@@ -12,8 +12,8 @@ void ofApp::setup(){
   material.setAmbientColor(ofColor(201, 167, 139));
   material.setDiffuseColor(ofColor(201, 198, 139));
 
-  kui.mapCommand('l', this, &ofApp::toggleLight, "Toggle light");
-  kui.mapCommand('g', this, &ofApp::switchGeometry, "Switch geometry");
+  kui.mapKey('l', this, &ofApp::toggleLight, "Toggle light");
+  kui.mapKey('g', this, &ofApp::switchGeometry, "Switch geometry");
 
 }
 
