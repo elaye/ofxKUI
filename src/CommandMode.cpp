@@ -4,6 +4,7 @@ CommandMode::CommandMode(UI& _ui) :
   ui(_ui) 
 {
   prompt = "> ";
+  caretLoopIndex = 0;
   initUI();
   ofLog() << "command init";
 
@@ -15,19 +16,30 @@ void CommandMode::windowResized(ofResizeEventArgs& event){
 }
 
 void CommandMode::initUI(){
+  rect.clear();
+  caret.clear();
+  auto& font = ui.getFont();
   float w = ofGetWidth();
-  float fontHeight = ui.getFont().getLineHeight();
+  float fontHeight = font.getLineHeight();
   float h = 1.2 * fontHeight;
-  float x = 0; 
+  float x = 0.0; 
   float y = ofGetHeight() - h; 
   rect.rectangle(x, y, w, h);
 
-  ofColor color = (0, 0, 0, 70);
-  rect.setFillColor(color);
+  ofColor promptColor = (0, 0, 0, 70);
+  rect.setFillColor(promptColor);
   rect.setFilled(true);
 
   comStrPos.x = x + 5;
   comStrPos.y = y + 0.9 * fontHeight;
+
+  ofColor caretColor = (255, 255, 255, 255);
+  float caretX = font.stringWidth(prompt) + 5.0;
+  float caretY = ofGetHeight() - (fontHeight + h) / 2.0;
+  caret.rectangle(caretX, caretY, ui.getCharWidth(), fontHeight);
+  caret.setFillColor(caretColor);
+  caret.setFilled(true);
+  caretForward();
 }
 
 void CommandMode::action(char key){
@@ -35,6 +47,8 @@ void CommandMode::action(char key){
   if (key == KUIKey::Backspace) {
     if(command.length() > 0){
       command.pop_back();
+      caretBackward();
+      caretLoopIndex = 0;
     }
   }
   else if(key == KUIKey::Return){
@@ -49,13 +63,43 @@ void CommandMode::action(char key){
   else {
     if(command.length() < 32){
       command.push_back(key);
+      caretForward();
+      caretLoopIndex = 0;
       ofLog() << command;
     }
   }
 }
 
+void CommandMode::caretForward(){
+  float w = ui.getCharWidth();
+  caret.translate(ofPoint(w, 0));
+}
+
+void CommandMode::caretBackward(){
+  float w = ui.getCharWidth();
+  caret.translate(ofPoint(-w, 0));
+}
+
 void CommandMode::parseExecCommand(string cmd){
   ofLog() << cmd;
+}
+
+void CommandMode::draw(){
+  drawPrompt();
+  drawCaret();
+}
+
+void CommandMode::drawCaret(){
+  int f = ofGetFrameRate();
+  int f2 = floor(f / 2.0); 
+  if(caretLoopIndex > f){
+    caretLoopIndex = 0;
+    return;
+  }
+  if(caretLoopIndex < f2){
+    caret.draw();
+  }
+  ++caretLoopIndex;
 }
 
 void CommandMode::drawPrompt(){

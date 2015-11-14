@@ -13,14 +13,21 @@ class CommandMode {
   ofPoint comStrPos;
 
   ofPath rect;
+  ofPath caret;
+
+  int caretLoopIndex;
 
   public:
     CommandMode(UI& ui);
 
     void action(char key);
-    void drawPrompt();
+    void draw();
 
   private:
+    void caretForward();
+    void caretBackward();
+    void drawPrompt();
+    void drawCaret();
   	void initUI();
     void windowResized(ofResizeEventArgs& event);
     void parseExecCommand(string cmd);

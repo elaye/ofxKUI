@@ -6,6 +6,11 @@ UI::UI(){
 
 void UI::loadFont(){
   font.load("Hack-v2_015-ttf/Hack-Regular.ttf", 10);
+  charWidth = font.stringWidth("0");
+}
+
+float UI::getCharWidth(){
+  return charWidth;
 }
 
 ofTrueTypeFont& UI::getFont(){

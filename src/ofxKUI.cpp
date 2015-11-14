@@ -25,7 +25,7 @@ void ofxKUI::draw(){
       norMode.drawDescription();
     }
     if(ui.getMode() == KUIMode::COMMAND){
-      comMode.drawPrompt();
+      comMode.draw();
     }
     if(bShowMode){
       ui.drawMode();

@@ -27,6 +27,7 @@ class UI {
   KUIAdjust adjust;
 
   ofTrueTypeFont font;
+  float charWidth;
 
   public:
     UI();
@@ -38,6 +39,7 @@ class UI {
     void setAdjustment(KUIAdjust adj);
     void toggleAdjustment();
 
+    float getCharWidth();
     void drawMode();
 
   private: 
