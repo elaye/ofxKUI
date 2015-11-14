@@ -22,5 +22,6 @@ class CommandMode {
 
   private:
   	void initUI();
+    void windowResized(ofResizeEventArgs& event);
     void parseExecCommand(string cmd);
 };

@@ -6,6 +6,12 @@ CommandMode::CommandMode(UI& _ui) :
   prompt = "> ";
   initUI();
   ofLog() << "command init";
+
+  ofAddListener(ofEvents().windowResized, this, &CommandMode::windowResized);
+}
+
+void CommandMode::windowResized(ofResizeEventArgs& event){
+  initUI();
 }
 
 void CommandMode::initUI(){
@@ -43,6 +49,7 @@ void CommandMode::action(char key){
   else {
     if(command.length() < 32){
       command.push_back(key);
+      ofLog() << command;
     }
   }
 }
