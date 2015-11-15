@@ -1,12 +1,17 @@
 #include "UI.h"
 
 UI::UI(){
+  fontPath = "Hack-v2_015-ttf/Hack-Regular.ttf";
   loadFont();
 }
 
 void UI::loadFont(){
-  font.load("Hack-v2_015-ttf/Hack-Regular.ttf", 10);
+  font.load(fontPath, 10);
   charWidth = font.stringWidth("0");
+}
+
+string UI::getFontPath(){
+  return fontPath;
 }
 
 float UI::getCharWidth(){

@@ -26,12 +26,14 @@ class UI {
   KUIMode mode;
   KUIAdjust adjust;
 
+  string fontPath;
   ofTrueTypeFont font;
   float charWidth;
 
   public:
     UI();
     ofTrueTypeFont& getFont();
+    string getFontPath();
     KUIMode getMode();
     void setMode(KUIMode mode);
 

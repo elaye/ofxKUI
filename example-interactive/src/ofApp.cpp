@@ -12,9 +12,13 @@ void ofApp::setup(){
   material.setDiffuseColor(ofColor(201, 198, 139));
 
   parameters.setName("Parameters");
-  parameters.add(scale.set("Scale", 50, 0, 200));
+  parameters.add(scale.set("Scale", 25, 0, 200));
+  parameters.add(scale1.set("Scale1", 125, 0, 200));
+  parameters.add(button.set("Button", true));
 
-  kui.addParameters(parameters);
+  panel.setup(parameters);
+  kui.setGUI(panel);
+  // kui.addParameters(parameters);
 
 }
 
@@ -32,5 +36,8 @@ void ofApp::draw(){
     material.end();
   cam.end();
 
+  ofEnableLighting();
+  ofDisableDepthTest();
+  panel.draw();
   kui.draw();
 }

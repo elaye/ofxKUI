@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 
+#include "ofxGui.h"
+
 #include "UI.h"
 
 #include "NormalMode.h"
@@ -25,6 +27,7 @@ class ofxKUI {
   public:
 
     ofxKUI();
+    void setTheme();
     void setCamera(ofCamera& camera);
 
     void draw();
@@ -37,7 +40,8 @@ class ofxKUI {
       norMode.mapKey(c, listener, listenerMethod, desc);
     }
 
-    void addParameters(ofParameterGroup& parameters);
+    // void addParameters(ofParameterGroup& parameters);
+    void setGUI(ofxPanel& panel);
 
     void keyPressed(ofKeyEventArgs& key);
     void keyReleased(ofKeyEventArgs& key);

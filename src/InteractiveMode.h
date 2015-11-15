@@ -2,25 +2,43 @@
 
 #include "ofMain.h"
 
+#include "ofxGui.h"
+
 #include "UI.h"
 
 class InteractiveMode {
 
   UI& ui;
 
-  ofParameterGroup* parameters;
+  ofxPanel* panel;
 
-  float sliderWidth, sliderHeight;
-  float hmargin, vmargin;
-  float sliderStopHeight, sliderStopWidth;
+  int activeControl;
+
+  // ofParameterGroup* parameters;
+
+  // float sliderWidth, sliderHeight;
+  // float hmargin, vmargin;
+  // float sliderStopHeight, sliderStopWidth;
 
   public:
     InteractiveMode(UI& ui);
 
+    void enable();
+    void disable();
+
     void action(char key);
 
-    void addParameters(ofParameterGroup& parameters);   
-    void drawParameters();
-    void drawParameter(ofParameter<float>& param);
-    void drawSlider(float t, float min, float max);
+    void leftAction();
+    void rightAction();
+
+    void setGUI(ofxPanel& panel);
+    void selectNext();
+    void selectPrev();
+    void select(int i);
+    void deselectActive();
+
+    // void addParameters(ofParameterGroup& parameters);   
+    // void drawParameters();
+    // void drawParameter(ofParameter<float>& param);
+    // void drawSlider(float t, float min, float max);
 };

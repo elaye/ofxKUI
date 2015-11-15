@@ -1,20 +1,32 @@
 #include "ofxKUI.h"
 
 ofxKUI::ofxKUI() :
-  norMode(ui),
+  intMode(ui),
   comMode(ui),
   camMode(ui),
-  intMode(ui)
+  norMode(ui)
 {
   ofRegisterKeyEvents(this); 
   ofSetEscapeQuitsApp(false);
+  setTheme();
   bShowDescription = true;
   bShowMode = true;
   bShowParameters = true;
 }
 
+void ofxKUI::setTheme(){
+  ofxGuiSetFont(ui.getFontPath(), 9);
+  ofxGuiSetBorderColor(ofColor(255, 255, 255, 0));
+  ofxGuiSetBackgroundColor(ofColor(255, 255, 255, 200));
+  ofxGuiSetBackgroundColor(ofColor(255, 255, 255, 127));
+}
+
 void ofxKUI::setCamera(ofCamera& cam){
   camMode.setCamera(cam);
+}
+
+void ofxKUI::setGUI(ofxPanel& panel){
+  intMode.setGUI(panel);
 }
 
 void ofxKUI::draw(){
@@ -31,7 +43,7 @@ void ofxKUI::draw(){
       ui.drawMode();
     }
     if(bShowParameters){
-      intMode.drawParameters();
+      // intMode.drawParameters();
     }
     ofEnableLighting();
   ofPopStyle();
@@ -45,6 +57,9 @@ void ofxKUI::keyPressed(ofKeyEventArgs& event){
     if(key == 'c' && camMode.getCamera() == nullptr){
       ofLogError() << "You need to set a camera to use the camera mode";
       return;
+    }
+    if(key == 'i'){
+      intMode.enable();
     }
     norMode.action(key);
   }
@@ -67,9 +82,9 @@ void ofxKUI::showMode(bool b){
   bShowMode = b;
 }
 
-void ofxKUI::addParameters(ofParameterGroup& param){
-  intMode.addParameters(param);
-}
+// void ofxKUI::addParameters(ofParameterGroup& param){
+//   intMode.addParameters(param);
+// }
 
 void ofxKUI::keyReleased(ofKeyEventArgs& key){
 
