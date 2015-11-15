@@ -10,12 +10,6 @@ class CameraMode {
 
   ofCamera* camera;
 
-  float coarsePositionStep;
-  float finePositionStep;
-
-  float coarseAngleStep;
-  float fineAngleStep;
-
   public:
     CameraMode(UI& ui);
 

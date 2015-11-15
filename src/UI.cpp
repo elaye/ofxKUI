@@ -3,6 +3,15 @@
 UI::UI(){
   fontPath = "Hack-v2_015-ttf/Hack-Regular.ttf";
   loadFont();
+  config = shared_ptr<Config>(new Config());
+}
+
+shared_ptr<Config> UI::getConfig(){
+  return config;
+}
+
+void UI::setConfig(shared_ptr<Config> _config){
+  config = _config;
 }
 
 void UI::loadFont(){

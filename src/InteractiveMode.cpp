@@ -20,28 +20,21 @@ void InteractiveMode::disable(){
 }
 
 void InteractiveMode::select(int i){
-  ofLog() << "select start";
   int n = panel->getNumControls();
   if(i < n){
     auto control = panel->getControl(i);
     control->setBackgroundColor(ofColor::red);
   }
-  ofLog() << "select end";
 }
 
 void InteractiveMode::selectNext(){
-  ofLog() << "start select next";
-  ofLog() << "a: " << activeControl;
   deselectActive();
   int n = panel->getNumControls();
   if(n > 0){
     activeControl += 1;
-  ofLog() << "a: " << activeControl;
     activeControl %= n;
-  ofLog() << "a: " << activeControl;
     select(activeControl);
   }
-  ofLog() << "end select next";
 }
 
 void InteractiveMode::selectPrev(){
@@ -108,14 +101,7 @@ void InteractiveMode::action(char key){
   if(key == KUIKey::Space){
     ui.toggleAdjustment();
   }
-  // ofParameter<float> scale = parameters->getFloat("Scale");
-  float v;
-  if(ui.getAdjustment() == KUIAdjust::COARSE){
-    v = 10;
-  }
-  else{
-    v = 1;
-  }
+
   switch(key){
     case 'k':
       selectNext();
@@ -133,42 +119,6 @@ void InteractiveMode::action(char key){
       break;
   }
 }
-
-// void InteractiveMode::action(char key){
-//   if(key == KUIKey::Esc){
-//     ui.setMode(KUIMode::NORMAL);
-//     return;
-//   }
-//   if(key == KUIKey::Space){
-//     ui.toggleAdjustment();
-//   }
-//   ofParameter<float> scale = parameters->getFloat("Scale");
-//   float v;
-//   if(ui.getAdjustment() == KUIAdjust::COARSE){
-//     v = 10;
-//   }
-//   else{
-//     v = 1;
-//   }
-//   switch(key){
-//     case 'j':
-//       if(scale - v > scale.getMin()){
-//         scale.set(scale - v);
-//       }
-//       else {
-//         scale.set(scale.getMin());
-//       }
-//       break;
-//     case 'm':
-//       if(scale + v < scale.getMax()){
-//         scale.set(scale + v);
-//       }
-//       else{
-//         scale.set(scale.getMax());
-//       }
-//       break;
-//   }
-// }
 
 // void InteractiveMode::drawParameters(){
 //   if(parameters == nullptr) return;
@@ -237,21 +187,4 @@ void InteractiveMode::action(char key){
 //       ofLogError() << "No control for parameter of type " << type;
 //     } 
 //   }
-// }
-
-// void InteractiveMode::drawParameter(ofParameter<float>& p){
-//   drawSlider(p.get(), p.getMin(), p.getMax());
-// }
-
-// void InteractiveMode::drawSlider(float t, float min, float max){
-//   ofSetColor(ofColor::white);
-//   float xStopLeft = hmargin - sliderStopWidth / 2;
-//   float xStopRight = xStopLeft + sliderWidth;
-//   float yStop = vmargin - sliderStopHeight / 2;
-//   ofDrawRectangle(xStopLeft, yStop, sliderStopWidth, sliderStopHeight);
-//   ofDrawRectangle(xStopRight, yStop, sliderStopWidth, sliderStopHeight);
-//   float w =  t / (max - min) * sliderWidth;
-//   float xSlider = hmargin;
-//   float ySlider = vmargin - sliderHeight / 2;
-//   ofDrawRectangle(xSlider, ySlider, w, sliderHeight);
 // }

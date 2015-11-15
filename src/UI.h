@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 
+#include "Config.h"
+
 enum class KUIMode {
   NORMAL,
   COMMAND,
@@ -26,6 +28,8 @@ class UI {
   KUIMode mode;
   KUIAdjust adjust;
 
+  shared_ptr<Config> config;
+
   string fontPath;
   ofTrueTypeFont font;
   float charWidth;
@@ -34,6 +38,10 @@ class UI {
     UI();
     ofTrueTypeFont& getFont();
     string getFontPath();
+
+    shared_ptr<Config> getConfig();
+    void setConfig(shared_ptr<Config> config);
+
     KUIMode getMode();
     void setMode(KUIMode mode);
 

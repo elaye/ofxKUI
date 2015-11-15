@@ -34,9 +34,9 @@ void ofApp::drawHelp(){
   y += 30;
   ofDrawBitmapString("[f] Move right", 10, y);
   y += 20;
-  ofDrawBitmapString("[q] Move left", 10, y);
+  ofDrawBitmapString("[a] Move left", 10, y);
   y += 30;
-  ofDrawBitmapString("[z] Move forward", 10, y);
+  ofDrawBitmapString("[w] Move forward", 10, y);
   y += 20;
   ofDrawBitmapString("[x] Move backward", 10, y);
   y += 30;
@@ -48,7 +48,7 @@ void ofApp::drawHelp(){
   y += 30;
   ofDrawBitmapString("[j] Rotate left around vertical axis", 10, y);
   y += 20;
-  ofDrawBitmapString("[m] Rotate right around vertical axis", 10, y);
+  ofDrawBitmapString("[;] Rotate right around vertical axis", 10, y);
   y += 30;
   ofDrawBitmapString("Press 'Esc' to exit camera mode.", 5, y);
 }

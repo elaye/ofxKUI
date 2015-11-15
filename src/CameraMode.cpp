@@ -3,12 +3,7 @@
 CameraMode::CameraMode(UI& _ui) :
   ui(_ui) 
 {
-  coarsePositionStep = 20;
-  finePositionStep = 4;
-  coarseAngleStep = 5;
-  fineAngleStep = 1;
   camera = nullptr;
-  ofLog() << "camera init";
 }
 
 ofCamera* CameraMode::getCamera(){
@@ -25,14 +20,14 @@ void CameraMode::action(char key){
       ui.setMode(KUIMode::NORMAL);
       break;
     // Positions
-    case 'd': camera->boom(getPositionStep()); break;
-    case 's': camera->boom(-getPositionStep()); break;
+    case 'd': camera->boom(-getPositionStep()); break;
+    case 's': camera->boom(getPositionStep()); break;
 
     case 'w': camera->dolly(-getPositionStep()); break;
     case 'x': camera->dolly(getPositionStep()); break;
 
-    case 'f': camera->truck(getPositionStep()); break;
-    case 'a': camera->truck(-getPositionStep()); break;
+    case 'f': camera->truck(-getPositionStep()); break;
+    case 'a': camera->truck(getPositionStep()); break;
 
     // Rotations
     case 'l': 
@@ -59,18 +54,18 @@ void CameraMode::action(char key){
 
 float CameraMode::getPositionStep(){
   if(ui.getAdjustment() == KUIAdjust::COARSE){
-    return coarsePositionStep;
+    return ui.getConfig()->getCameraPositionCoarse();
   }
   else{
-    return finePositionStep;
+    return ui.getConfig()->getCameraPositionFine();
   }
 }
 
 float CameraMode::getAngleStep(){
   if(ui.getAdjustment() == KUIAdjust::COARSE){
-    return coarseAngleStep;
+    return ui.getConfig()->getCameraAngleCoarse();
   }
   else{
-    return fineAngleStep;
+    return ui.getConfig()->getCameraAngleFine();
   }
 }
