@@ -24,8 +24,6 @@ class CommandMode {
     void draw();
 
   private:
-    void caretForward();
-    void caretBackward();
     void drawPrompt();
     void drawCaret();
   	void initUI();

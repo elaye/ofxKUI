@@ -6,8 +6,6 @@ CommandMode::CommandMode(UI& _ui) :
   prompt = "> ";
   caretLoopIndex = 0;
   initUI();
-  ofLog() << "command init";
-
   ofAddListener(ofEvents().windowResized, this, &CommandMode::windowResized);
 }
 
@@ -34,12 +32,11 @@ void CommandMode::initUI(){
   comStrPos.y = y + 0.9 * fontHeight;
 
   ofColor caretColor = (255, 255, 255, 255);
-  float caretX = font.stringWidth(prompt) + 5.0;
+  float caretX = font.stringWidth(prompt) + 5.0 + ui.getCharWidth();
   float caretY = ofGetHeight() - (fontHeight + h) / 2.0;
   caret.rectangle(caretX, caretY, ui.getCharWidth(), fontHeight);
   caret.setFillColor(caretColor);
   caret.setFilled(true);
-  caretForward();
 }
 
 void CommandMode::action(char key){
@@ -47,7 +44,6 @@ void CommandMode::action(char key){
   if (key == KUIKey::Backspace) {
     if(command.length() > 0){
       command.pop_back();
-      caretBackward();
       caretLoopIndex = 0;
     }
   }
@@ -61,23 +57,13 @@ void CommandMode::action(char key){
     command = "";
   }
   else {
-    if(command.length() < 32){
+    // Max command length = 32 and only printable characters
+    if(command.length() < 32 && key > 31 && key < 127){
       command.push_back(key);
-      caretForward();
       caretLoopIndex = 0;
       ofLog() << command;
     }
   }
-}
-
-void CommandMode::caretForward(){
-  float w = ui.getCharWidth();
-  caret.translate(ofPoint(w, 0));
-}
-
-void CommandMode::caretBackward(){
-  float w = ui.getCharWidth();
-  caret.translate(ofPoint(-w, 0));
 }
 
 void CommandMode::parseExecCommand(string cmd){
@@ -97,7 +83,10 @@ void CommandMode::drawCaret(){
     return;
   }
   if(caretLoopIndex < f2){
-    caret.draw();
+    ofPushMatrix();
+      ofTranslate(command.length() * ui.getCharWidth(), 0, 0);
+      caret.draw();
+    ofPopMatrix();
   }
   ++caretLoopIndex;
 }
