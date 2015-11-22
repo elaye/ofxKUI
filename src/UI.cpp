@@ -73,7 +73,15 @@ void UI::drawMode(){
       m = "interactive";
       break;
   }
+  float fh = font.getLineHeight();
+  ofPath path;
+  float w = 1.2 * font.stringWidth(m);
+  float h = 1.2 * fh;
+  path.setFilled(true);
+  path.setFillColor(ofColor::grey);
+  path.rectangle(ofGetWidth() - w, ofGetHeight() - h, w, h);
+  path.draw();
   float x = ofGetWidth() - font.stringWidth(m) - 5;
-  // font.drawString(m, x, comStrPos.y);
-  font.drawString(m, x, 40);
+  float y = ofGetHeight() - 0.2 * fh;
+  font.drawString(m, x, y);
 }
