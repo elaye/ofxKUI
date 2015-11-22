@@ -4,8 +4,9 @@ ofxKUI
 Introduction
 ------------
 ofxKUI helps you to control your openFrameworks app with your keyboard.
+The idea is that you can control your app without using the mouse and ideally without moving your fingers away from the home row.
 It is composed of different modes that you can activate by pressing keys.
-The interface is inspired by Vim.
+The interface is inspired by Vim. 
 
 Modes
 -----
@@ -16,7 +17,7 @@ Special keys are represented between diples like this: `<Esc>` represents the `E
 
 **normal mode [`<Esc>`]**
 
-In this mode you can access all the other modes. It is kind of a 'base mode'.
+In this mode you can access all the other modes. It is a kind of a 'base mode'.
 
 **camera mode [`c`]**
 
@@ -32,8 +33,45 @@ This mode lets you enter commands. It is essentially used to set parameter value
 
 **interactive mode [`i`]**
 
+This mode lets you change parameters interactively. Select the next parameter with `k`, the previous parameter with `l` and change the values with `j` and `;`.
+
+**Custom mode**
 -- TODO --
-This mode lets you change parameters interactively.
+Allow users to add their own modes.
+
+Configuration
+-------------
+You can configure a lot of this addon's parameters, like the colors of the GUI for instance.
+You can get a pointer to the config object like this:
+
+    ofxKUI kui;
+    auto config = kui.getConfig();
+
+**Adjustment configuration**
+There are two adjustment modes: `coarse` and `fine`. Depending on which mode you are in, the adjustment values will be different. 
+
+These are the default values for the different modes and parameters:
+
+|Mode                   |Adjustment |Value |
+|-----------------------|-----------|------|
+|Parameter (float, int) |COARSE     |10%   |
+|                       |fine       |1%    |
+|Camera position        |COARSE     |20    |
+|                       |fine       |4     |
+|Camera angle           |COARSE     |5°    |
+|                       |fine       |1°    |
+
+
+You can use the config to set the adjustment values. For example you can set the coarse adjustment value for changing the camera angle to 10 like this:
+
+    config->setCameraAngleCoarse(10);
+
+**Theme**
+There are two built-in themes available for the GUI, a dark theme (the default theme) and a light one. To use the light theme you can do this:
+
+    config->useLightTheme();
+
+Remember that you need to call this before setting up the GUI (see `example-config`).
 
 License
 -------
