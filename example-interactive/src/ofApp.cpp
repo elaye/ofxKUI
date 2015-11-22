@@ -16,6 +16,14 @@ void ofApp::setup(){
   parameters.add(scale1.set("Scale1", 125, 0, 200));
   parameters.add(button.set("Button", true));
 
+  // For the theme to be effective,
+  // you need to set it before setting up the GUI
+
+  // Get a pointer to the config object
+  auto config = kui.getConfig();
+  // Set the theme
+  config->useLightTheme();
+
   panel.setup(parameters);
   kui.setGUI(panel);
   // kui.addParameters(parameters);

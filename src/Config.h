@@ -2,10 +2,26 @@
 
 #include "ofMain.h"
 
+#include "ofxGui.h"
+
+struct GUITheme {
+  ofColor headerBackgroundColor;
+  ofColor backgroundColor;
+  ofColor selectedBackgroundColor;
+  ofColor fillColor;
+  ofColor selectedFillColor;
+  ofColor textColor;
+  ofColor selectedTextColor;
+  ofColor borderColor;
+  ofColor selectedBorderColor;
+};
+
 class Config {
 
-  ofColor backgroundColor = ofColor::green;
-  ofColor selectedBackgroundColor = ofColor::red;
+  GUITheme lightTheme;
+  GUITheme darkTheme;
+
+  GUITheme currentTheme;
 
   float percentCoarse = 0.1;
   float percentFine = 0.01;
@@ -16,10 +32,13 @@ class Config {
   float cameraAngleFine = 1.0;
 
   public:
-    ofColor getBackgroundColor(){ return backgroundColor; }
-    void setBackgroundColor(ofColor color){ backgroundColor = color; }
-    ofColor getSelectedBackgroundColor(){ return backgroundColor; }
-    void setSelectedBackgroundColor(ofColor color){ backgroundColor = color; }
+    Config();
+
+    GUITheme getTheme();
+    void setTheme(GUITheme theme);
+
+    void useDarkTheme();
+    void useLightTheme();
 
     float getPercentCoarse(){ return percentCoarse; } 
     void setPercentCoarse(float p){ percentCoarse = p; }
@@ -34,4 +53,8 @@ class Config {
     void setCameraAngleCoarse(float c){ cameraAngleCoarse = c; }
     float getCameraAngleFine(){ return cameraAngleFine; }
     void setCameraAngleFine(float f){ cameraAngleFine = f; }
+
+  private:
+    void setupDarkTheme();
+    void setupLightTheme();
 };

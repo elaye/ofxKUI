@@ -5,6 +5,7 @@
 #include "ofxGui.h"
 
 #include "UI.h"
+#include "Config.h"
 
 #include "NormalMode.h"
 #include "InteractiveMode.h"
@@ -27,8 +28,9 @@ class ofxKUI {
   public:
 
     ofxKUI();
-    void setTheme();
     void setCamera(ofCamera& camera);
+
+    shared_ptr<Config> getConfig();
 
     void draw();
 

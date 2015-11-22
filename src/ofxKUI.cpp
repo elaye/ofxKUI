@@ -8,17 +8,13 @@ ofxKUI::ofxKUI() :
 {
   ofRegisterKeyEvents(this); 
   ofSetEscapeQuitsApp(false);
-  setTheme();
   bShowDescription = true;
   bShowMode = true;
   bShowParameters = true;
 }
 
-void ofxKUI::setTheme(){
-  ofxGuiSetFont(ui.getFontPath(), 9);
-  ofxGuiSetBorderColor(ofColor(255, 255, 255, 0));
-  ofxGuiSetBackgroundColor(ofColor(255, 255, 255, 200));
-  ofxGuiSetBackgroundColor(ofColor(255, 255, 255, 127));
+shared_ptr<Config> ofxKUI::getConfig(){
+  return ui.getConfig();
 }
 
 void ofxKUI::setCamera(ofCamera& cam){

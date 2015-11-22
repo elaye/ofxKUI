@@ -23,7 +23,8 @@ void InteractiveMode::select(int i){
   int n = panel->getNumControls();
   if(i < n){
     auto control = panel->getControl(i);
-    control->setBackgroundColor(ofColor::red);
+    auto theme = ui.getConfig()->getTheme();
+    control->setBackgroundColor(theme.selectedBackgroundColor);
   }
 }
 
@@ -98,7 +99,8 @@ float InteractiveMode::getStep(){
 
 void InteractiveMode::deselectActive(){
   auto control = panel->getControl(activeControl);
-  control->setBackgroundColor(ofColor::green);
+  auto theme = ui.getConfig()->getTheme();
+  control->setBackgroundColor(theme.backgroundColor);
 }
 
 void InteractiveMode::action(char key){
