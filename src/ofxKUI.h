@@ -6,6 +6,7 @@
 
 #include "UI.h"
 #include "Config.h"
+#include "Help.h"
 
 #include "NormalMode.h"
 #include "InteractiveMode.h"
@@ -16,6 +17,8 @@ class ofxKUI {
 
   UI ui;
 
+  Help help;
+
   InteractiveMode intMode;
   CameraMode camMode;
   CommandMode comMode;
@@ -24,6 +27,7 @@ class ofxKUI {
   bool bShowDescription;
   bool bShowParameters;
   bool bShowMode;
+  bool bHelp;
 
   public:
 

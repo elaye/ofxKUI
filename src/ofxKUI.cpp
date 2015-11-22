@@ -4,7 +4,8 @@ ofxKUI::ofxKUI() :
   intMode(ui),
   comMode(ui),
   camMode(ui),
-  norMode(ui)
+  norMode(ui),
+  help(ui)
 {
   ofRegisterKeyEvents(this); 
   ofSetEscapeQuitsApp(false);
@@ -41,6 +42,9 @@ void ofxKUI::draw(){
     if(bShowParameters){
       // intMode.drawParameters();
     }
+    if(bHelp){
+      help.draw();
+    }
     ofEnableLighting();
   ofPopStyle();
 }
@@ -49,6 +53,9 @@ void ofxKUI::keyPressed(ofKeyEventArgs& event){
   auto key = event.key;
   ofLog() << key;
   auto mode = ui.getMode();
+  if(key == '?'){
+    bHelp = !bHelp;
+  }
   if(mode == KUIMode::NORMAL){
     if(key == 'c' && camMode.getCamera() == nullptr){
       ofLogError() << "You need to set a camera to use the camera mode";
