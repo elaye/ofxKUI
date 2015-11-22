@@ -57,7 +57,7 @@ void InteractiveMode::leftAction(){
 
     float pmax = p.getMax();
     float pmin = p.getMin();
-    float dec = (pmax - pmin) / 100.0;
+    float dec = (pmax - pmin) * getStep();
     float p0 = p.get();
     p.set(p0 - dec);
   }
@@ -77,13 +77,22 @@ void InteractiveMode::rightAction(){
 
     float pmax = p.getMax();
     float pmin = p.getMin();
-    float inc = (pmax - pmin) / 100.0;
+    float inc = (pmax - pmin) * getStep();
     float p0 = p.get();
     p.set(p0 + inc);
   }
   else if(type == typeid(ofParameter<bool>).name()){
     auto p = param.cast<bool>();
     p.set(true);
+  }
+}
+
+float InteractiveMode::getStep(){
+  if(ui.getAdjustment() == KUIAdjust::COARSE){
+    return ui.getConfig()->getPercentCoarse();
+  }
+  else{
+    return ui.getConfig()->getPercentFine();
   }
 }
 

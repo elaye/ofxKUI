@@ -41,4 +41,6 @@ class InteractiveMode {
     // void drawParameters();
     // void drawParameter(ofParameter<float>& param);
     // void drawSlider(float t, float min, float max);
+  private:
+    float getStep();
 };
