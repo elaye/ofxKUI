@@ -12,6 +12,7 @@ void InteractiveMode::setGUI(ofxPanel& _panel){
 }
 
 void InteractiveMode::enable(){
+  if (panel == nullptr) return;
   select(0);
 }
 
@@ -104,6 +105,7 @@ void InteractiveMode::deselectActive(){
 }
 
 void InteractiveMode::action(char key){
+  if(panel == nullptr) return;
   if(key == KUIKey::Esc){
     deselectActive();
     ui.setMode(KUIMode::NORMAL);
