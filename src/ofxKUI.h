@@ -29,6 +29,10 @@ class ofxKUI {
   bool bShowMode;
   bool bHelp;
 
+  ofTrueTypeFont keyFont;
+  string lastKey;
+  float keyTimer;
+
   public:
 
     ofxKUI();
@@ -56,5 +60,7 @@ class ofxKUI {
 
   private:
     void initUI();
+    void drawKey();
+    void setLastKey(char c);
 
 };
