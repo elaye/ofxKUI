@@ -61,7 +61,7 @@ void CommandMode::action(char key){
     if(command.length() < 32 && key > 31 && key < 127){
       command.push_back(key);
       caretLoopIndex = 0;
-      ofLog() << command;
+      // ofLog() << command;
     }
   }
 }
