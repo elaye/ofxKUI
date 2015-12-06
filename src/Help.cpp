@@ -4,6 +4,10 @@ Help::Help(UI& _ui):
 ui(_ui)
 {
   initUI();
+  cursorStart = ofPoint(10, 20);
+  cursor = cursorStart;
+  lineHeight = ui.getFont().getLineHeight();
+  lineWidth = 0;
   ofAddListener(ofEvents().windowResized, this, &Help::windowResized);
 }
 
@@ -19,45 +23,46 @@ void Help::initUI(){
 }
 
 void Help::draw(){
-  // ui.drawString();
+  lineWidth = 0;
+  cursor = cursorStart;
   background.draw();
+
+  printNext("Help");
+  printNext("----");
+  printNext("? Show/hide this help");
+  printNext("<Esc> Return to normal mode");
+  printNext("<Space> Switch between coarse and fine adjustment");
+  printNext("");
+
+  printNext("Camera mode [c]");
+  printNext("---------------");
+  printNext("");
+
+  printNext("[s] Move down");
+  printNext("[d] Move up");
+  printNext("[f] Move right");
+  printNext("[a] Move left");
+  printNext("[w] Move forward");
+  printNext("[x] Move backward");
+  printNext("");
+
+  printNext("[k] Rotate down around horizontal axis");
+  printNext("[l] Rotate up around horizontal axis");
+  printNext("[j] Rotate left around vertical axis");
+  printNext("[;] Rotate right around vertical axis");
+  printNext("");
+}
+
+void Help::printNext(string s){
   auto font = ui.getFont();
-  float x = 10;
-  float y = 20;
-  float l = 15;
-
-  font.drawString("Help", x, y);
-  y += l;
-  font.drawString("---------------------", x, y);
-  y += l;
-  font.drawString("? Show/hide this help", x, y);
-  y += l;
-  font.drawString("[Esc] Return to normal mode", x, y);
-  y += 2 * l;
-
-  font.drawString("Camera mode [c]", x, y);
-  y += l;
-  font.drawString("---------------------", x, y);
-  y += 2 * l;
-
-  font.drawString("[s] Move down", x, y);
-  y += l;
-  font.drawString("[d] Move up", x, y);
-  y += l;
-  font.drawString("[f] Move right", x, y);
-  y += l;
-  font.drawString("[a] Move left", x, y);
-  y += l;
-  font.drawString("[w] Move forward", x, y);
-  y += l;
-  font.drawString("[x] Move backward", x, y);
-  y += 2 * l;
-
-  font.drawString("[k] Rotate down around horizontal axis", x, y);
-  y += l;
-  font.drawString("[l] Rotate up around horizontal axis", x, y);
-  y += l;
-  font.drawString("[j] Rotate left around vertical axis", x, y);
-  y += l;
-  font.drawString("[;] Rotate right around vertical axis", x, y);
+  if (cursor.y > ofGetHeight() - lineHeight) {
+    cursor.y = cursorStart.y;
+    cursor.x += lineWidth + 40;
+  }
+  else {
+    cursor.y += lineHeight;
+  }
+  float w = font.stringWidth(s);
+  if (w > lineWidth) lineWidth = w;
+  font.drawString(s, cursor.x, cursor.y);
 }
