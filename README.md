@@ -14,6 +14,7 @@ ofxKUI is composed of different modes that let you achieve different kinds of in
 The different modes are explained below. 
 The character between **[]** represents the key you need to press to activate the mode when in normal mode. 
 Special keys are represented between diples like this: `<Esc>` represents the `Escape` key. 
+You can press `?` at every time to display a help screen with the different keys you can use.
 
 **normal mode [`<Esc>`]**
 
@@ -23,17 +24,16 @@ In this mode you can access all the other modes. It is a kind of a 'base mode'.
 
 This mode lets you control a camera with your keyboard, provided that you set a camera using the `setCamera` method. 
 When in camera mode, you can use keys to move or rotate the camera.
-The idea is that you can control the camera without moving your fingers from the home row (except for moving forward and backward).
 See the `example-camera` example for a demonstration and more information.
+
+**interactive mode [`i`]**
+
+This mode lets you change GUI parameters interactively. Select the next parameter with `k`, the previous parameter with `l` and change the values with `j` and `;`.
 
 **command mode [`d`]**
 
 -- TODO --
 This mode lets you enter commands. It is essentially used to set parameter values.
-
-**interactive mode [`i`]**
-
-This mode lets you change parameters interactively. Select the next parameter with `k`, the previous parameter with `l` and change the values with `j` and `;`.
 
 **Custom mode**
 -- TODO --
