@@ -63,6 +63,16 @@ void InteractiveMode::leftAction(){
     float p0 = p.get();
     p.set(p0 - dec);
   }
+  else if(type == typeid(ofParameter<int>).name()){
+    auto p = param.cast<int>();
+
+    float pmax = p.getMax();
+    float pmin = p.getMin();
+    int dec = (pmax - pmin) * getStep();
+    dec = (dec == 0) ? 1 : dec;
+    int p0 = p.get();
+    p.set(p0 - dec);
+  }
   else if(type == typeid(ofParameter<bool>).name()){
     auto p = param.cast<bool>();
     p.set(false);
@@ -81,6 +91,16 @@ void InteractiveMode::rightAction(){
     float pmin = p.getMin();
     float inc = (pmax - pmin) * getStep();
     float p0 = p.get();
+    p.set(p0 + inc);
+  }
+  else if(type == typeid(ofParameter<int>).name()){
+    auto p = param.cast<int>();
+
+    float pmax = p.getMax();
+    float pmin = p.getMin();
+    int inc = (pmax - pmin) * getStep();
+    inc = (inc == 0) ? 1 : inc;
+    int p0 = p.get();
     p.set(p0 + inc);
   }
   else if(type == typeid(ofParameter<bool>).name()){
