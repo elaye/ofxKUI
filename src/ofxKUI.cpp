@@ -32,7 +32,7 @@ void ofxKUI::setGUI(ofxPanel& panel){
 void ofxKUI::draw(){
   ofPushStyle();
     ofDisableDepthTest();
-    ofDisableLighting();
+    //ofDisableLighting();
     if(bShowDescription){
       norMode.drawDescription();
     }
@@ -49,7 +49,7 @@ void ofxKUI::draw(){
       help.draw();
     }
     // drawKey();
-    ofEnableLighting();
+    //ofEnableLighting();
   ofPopStyle();
 }
 
