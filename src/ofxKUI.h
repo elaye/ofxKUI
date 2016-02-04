@@ -29,13 +29,12 @@ class ofxKUI {
   bool bShowMode;
   bool bHelp;
 
-  ofTrueTypeFont keyFont;
   string lastKey;
   float keyTimer;
 
   public:
 
-    ofxKUI();
+    ofxKUI(string fontPath = "");
     void setCamera(ofCamera& camera);
 
     shared_ptr<Config> getConfig();

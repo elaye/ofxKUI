@@ -16,9 +16,9 @@ void CommandMode::windowResized(ofResizeEventArgs& event){
 void CommandMode::initUI(){
   rect.clear();
   caret.clear();
-  auto& font = ui.getFont();
+//  auto& font = ui.getFont();
   float w = ofGetWidth();
-  float fontHeight = font.getLineHeight();
+  float fontHeight = ui.getLineHeight();
   float h = 1.2 * fontHeight;
   float x = 0.0; 
   float y = ofGetHeight() - h; 
@@ -32,7 +32,7 @@ void CommandMode::initUI(){
   comStrPos.y = y + 0.9 * fontHeight;
 
   ofColor caretColor = (255, 255, 255, 255);
-  float caretX = font.stringWidth(prompt) + 5.0 + ui.getCharWidth();
+  float caretX = ui.stringWidth(prompt) + 5.0 + ui.getCharWidth();
   float caretY = ofGetHeight() - (fontHeight + h) / 2.0;
   caret.rectangle(caretX, caretY, ui.getCharWidth(), fontHeight);
   caret.setFillColor(caretColor);
@@ -92,15 +92,14 @@ void CommandMode::drawCaret(){
 }
 
 void CommandMode::drawPrompt(){
-  auto& font = ui.getFont();
   rect.draw(); 
   // Print prompt
   ofSetColor(ofColor::white);
   float x = comStrPos.x;
-  font.drawString(prompt, x, comStrPos.y);
+  ui.drawString(prompt, x, comStrPos.y);
   // Print commands
   ofSetColor(ofColor::white);
-  x += font.stringWidth(prompt) + 5;
-  font.drawString(command, x, comStrPos.y);
+  x += ui.stringWidth(prompt) + 5;
+  ui.drawString(command, x, comStrPos.y);
   ofEnableLighting();
 }

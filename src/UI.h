@@ -32,10 +32,14 @@ class UI {
 
   string fontPath;
   ofTrueTypeFont font;
+
+  bool bUseFont;
+
   float charWidth;
+  float lineHeight;
 
   public:
-    UI();
+    UI(string fontPath = "");
     ofTrueTypeFont& getFont();
     string getFontPath();
 
@@ -51,6 +55,10 @@ class UI {
 
     float getCharWidth();
     void drawMode();
+
+    void drawString(string str, float x, float y);
+    float stringWidth(string str);
+    float getLineHeight();
 
   private: 
     void loadFont();

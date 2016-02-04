@@ -6,7 +6,7 @@ ui(_ui)
   initUI();
   cursorStart = ofPoint(10, 20);
   cursor = cursorStart;
-  lineHeight = ui.getFont().getLineHeight();
+  lineHeight = ui.getLineHeight();
   lineWidth = 0;
   ofAddListener(ofEvents().windowResized, this, &Help::windowResized);
 }
@@ -62,7 +62,7 @@ void Help::printNext(string s){
   else {
     cursor.y += lineHeight;
   }
-  float w = font.stringWidth(s);
+  float w = ui.stringWidth(s);
   if (w > lineWidth) lineWidth = w;
-  font.drawString(s, cursor.x, cursor.y);
+  ui.drawString(s, cursor.x, cursor.y);
 }

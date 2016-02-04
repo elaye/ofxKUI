@@ -1,6 +1,7 @@
 #include "ofxKUI.h"
 
-ofxKUI::ofxKUI() :
+ofxKUI::ofxKUI(string fontPath) :
+  ui(fontPath),
   intMode(ui),
   comMode(ui),
   camMode(ui),
@@ -12,9 +13,10 @@ ofxKUI::ofxKUI() :
   bShowDescription = true;
   bShowMode = true;
   bShowParameters = true;
+  bHelp = false;
   keyTimer = 0;
   lastKey = "";
-  keyFont.load("Hack-v2_015-ttf/Hack-Regular.ttf", 32);
+//  keyFont.load("Hack-v2_015-ttf/Hack-Regular.ttf", 32);
 }
 
 shared_ptr<Config> ofxKUI::getConfig(){
@@ -106,8 +108,8 @@ void ofxKUI::setLastKey(char c){
 }
 
 void ofxKUI::drawKey(){
-  float strWidth = keyFont.stringWidth(lastKey);
-  float strHeight = keyFont.getLineHeight();
+  float strWidth = ui.stringWidth(lastKey);
+  float strHeight = ui.getLineHeight();
   float xc = ofGetWidth() - 200.0;
   float w = strWidth + 30.0;
   float h = strHeight + 15.0;
@@ -122,7 +124,7 @@ void ofxKUI::drawKey(){
   ofDrawRectangle(xr, yr, w, h);
 
   ofSetColor(ofColor(0, 0, 0, a));
-  keyFont.drawString(lastKey, xs, ys);
+  ui.drawString(lastKey, xs, ys);
   keyTimer *= 0.98;
 }
 

@@ -46,10 +46,11 @@ void NormalMode::action(char key){
 }
 
 void NormalMode::drawDescription(){
-  auto& font = ui.getFont();
+//  auto& font = ui.getFont();
   float descWidth = 0;
   for(auto& m : maps){
-    float w = font.stringWidth(m.second.desc);
+//    float w = font.stringWidth(m.second.desc);
+    float w = ui.stringWidth(m.second.desc);
     if(w > descWidth) descWidth = w;
   }
 
@@ -60,7 +61,9 @@ void NormalMode::drawDescription(){
     float x = ofGetWidth() - descWidth - 10;
     // ofSetColor(ofColor::green);
     ofSetColor(ofColor::white);
-    font.drawString(desc, x, y); 
-    y += font.getLineHeight();
+//    font.drawString(desc, x, y); 
+    ui.drawString(desc, x, y);
+//    y += font.getLineHeight();
+    y += ui.getLineHeight();
   } 
 }

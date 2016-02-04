@@ -1,8 +1,15 @@
 #include "UI.h"
 
-UI::UI(){
-  fontPath = "Hack-v2_015-ttf/Hack-Regular.ttf";
-  loadFont();
+UI::UI(string _fontPath) :
+fontPath(_fontPath)
+{
+  bUseFont = false;
+  charWidth = 8.0;
+  lineHeight = 13.0;
+  if(fontPath != ""){
+    loadFont();
+    bUseFont = true;
+  }
   config = shared_ptr<Config>(new Config());
 }
 
@@ -17,6 +24,7 @@ void UI::setConfig(shared_ptr<Config> _config){
 void UI::loadFont(){
   font.load(fontPath, 10);
   charWidth = font.stringWidth("0");
+  lineHeight = font.getLineHeight();
 }
 
 string UI::getFontPath(){
@@ -56,6 +64,23 @@ void UI::toggleAdjustment(){
   }
 }
 
+void UI::drawString(string str, float x, float y){
+  if(bUseFont){
+    font.drawString(str, x, y);
+  }
+  else {
+    ofDrawBitmapString(str, x, y);
+  }
+}
+
+float UI::getLineHeight(){
+  return lineHeight;
+}
+
+float UI::stringWidth(string str){
+  return charWidth * str.length();
+}
+
 void UI::drawMode(){
   string m;
   // switch(mode){
@@ -73,9 +98,9 @@ void UI::drawMode(){
       m = "interactive";
       break;
   }
-  float fh = font.getLineHeight();
+  float fh = getLineHeight();
   ofPath path;
-  float w = 1.2 * font.stringWidth(m);
+  float w = 1.2 * stringWidth(m);
   float h = 1.2 * fh;
   path.setFilled(true);
   path.setFillColor(ofColor::grey);
@@ -83,5 +108,7 @@ void UI::drawMode(){
   path.draw();
   float x = ofGetWidth() - font.stringWidth(m) - 5;
   float y = ofGetHeight() - 0.2 * fh;
-  font.drawString(m, x, y);
+  ofSetColor(ofColor::white);
+//  ofDisableDepthTest();
+  drawString(m, x, y);
 }
