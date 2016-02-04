@@ -6,6 +6,23 @@ NormalMode::NormalMode(UI& _ui) :
 
 }
 
+string NormalMode::getKeyString(char c){
+  switch(c){
+    case OF_KEY_RETURN:
+      return "return";
+      break;
+    case OF_KEY_BACKSPACE:
+      return "backspace";
+      break;
+    default:
+      {
+        ostringstream ss;
+        ss << c;
+        return ss.str();
+      }
+  }
+}
+
 void NormalMode::action(char key){
   if(maps.find(key) != maps.end()){
     ofNotifyEvent(maps[key].event);

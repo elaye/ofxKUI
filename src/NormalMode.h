@@ -21,6 +21,8 @@ class NormalMode {
     void action(char key);
     void drawDescription();
 
+    string getKeyString(char c);
+
     template <class ListenerClass>
     void mapKey(char c, ListenerClass* listener, void (ListenerClass::*listenerMethod)(void), string desc = ""){
       if(c == 'i' || c == 'c' || c == 'd' || c == 32){
@@ -33,9 +35,10 @@ class NormalMode {
         com.desc = "";
       }
       else{
-        stringstream cs;
-        cs << c;
-        com.desc = "[" + cs.str() + "] " + desc;
+//        stringstream cs;
+//        cs << getKeyString(c);
+//        com.desc = "[" + cs.str() + "] " + desc;
+        com.desc = "[" + getKeyString(c) + "] " + desc;
       }
       maps[c] = com;
       ofAddListener(maps[c].event, listener, listenerMethod);
