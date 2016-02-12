@@ -19,6 +19,10 @@ ofxKUI::ofxKUI(string fontPath) :
 //  keyFont.load("Hack-v2_015-ttf/Hack-Regular.ttf", 32);
 }
 
+void ofxKUI::overrideEsc(bool b){
+  ofSetEscapeQuitsApp(!b);
+}
+
 shared_ptr<Config> ofxKUI::getConfig(){
   return ui.getConfig();
 }

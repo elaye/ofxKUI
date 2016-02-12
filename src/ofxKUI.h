@@ -49,6 +49,8 @@ class ofxKUI {
       norMode.mapKey(c, listener, listenerMethod, desc);
     }
 
+    void overrideEsc(bool b);
+
     // void addParameters(ofParameterGroup& parameters);
     void setGUI(ofxPanel& panel);
 
